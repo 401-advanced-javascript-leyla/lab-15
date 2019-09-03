@@ -108,7 +108,7 @@ users.methods.comparePassword = function(password) {
 
 users.methods.generateToken = function() {
   let options = {
-    expiresIn: '1m',
+    expiresIn: '15m',
   };
 
   let token = {
