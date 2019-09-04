@@ -47,6 +47,7 @@ class Model {
     // Call the appropriate mongoose method to create a new record
     const newRecord = new this.schema(record);
     //this will return a resolved promise into a new product
+    // console.log('hit create function',this);
     return newRecord.save();
 
   }

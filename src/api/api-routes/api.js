@@ -130,7 +130,7 @@ function handleUpdate(request,response,next) {
   // expects the record that was just updated in the database
   request.model.update(request.params.id, request.body)
     .then( result => {
-    //   console.log('this is in the puPro func', result);
+      console.log('this is in the update func', result);
       return response.status(200).json(result);
     })
     .catch( err=>console.log(err) );
