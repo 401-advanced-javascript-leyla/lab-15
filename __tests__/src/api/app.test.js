@@ -124,49 +124,49 @@ describe('Products API', () => {
     const testProduct = {
       name: 'sushi',
       description: 'There are some sushi',
-      quantity: 13,
+      quantity: 20,
     };
     return mockRequest.post('/api/v1/products')
       .set('Authorization', 'Bearer ' + encodedToken)
       .send(testProduct)
       .then(result=>{
-        return (mockRequest.delete(`/api/v1/products/${result.body._id}`));
+        return (mockRequest.delete(`/api/v1/products/${result.body._id}`))
+          .set('Authorization', 'Bearer ' + encodedToken);
       })
 
       .then(response=>{
-        // console.log('this is in the deleteProduct test, response:', response);
         expect(response.status).toEqual(200);
         expect(response.body.name).toEqual(testProduct.name);
       });
 
   });
 
-  it('Getting all the products data from and return 201', () => {
-    const testProduct = {
-      name: 'fish',
-      description: 'There are some fish',
-      quantity: 100,
+  // tests for categories
+
+  it('Getting all the category data from and return 201', () => {
+    const testCategory = {
+      name: 'dog',
+      description: 'There are some dogs',
     };
 
-    return mockRequest.post('/api/v1/products')
+    return mockRequest.post('/api/v1/categories')
       .set('Authorization', 'Bearer ' + encodedToken)
-      .send(testProduct)
+      .send(testCategory)
       .then(()=>{
-        return mockRequest.get('/api/v1/products');
+        return mockRequest.get('/api/v1/categories');
       })
       .then(response => {
         expect(response.status).toEqual(200);
-        expect(response.body.count).toEqual(5);
+        expect(response.body.count).toEqual(1);
       });
   });
 
-  //tests for categories
+
 
   it('Getting the category with the id from request params and return 200', () => {
     const testCategory = {
       name: 'sushi',
       description: 'There are some sushi',
-      quantity: 15,
     };
 
     return mockRequest.post('/api/v1/categories')
@@ -187,14 +187,12 @@ describe('Products API', () => {
     const testCategory = {
       name: 'fish',
       description: 'There are some fish',
-      quantity: 100,
     };
 
     return mockRequest.post('/api/v1/categories')
       .set('Authorization', 'Bearer ' + encodedToken)
       .send(testCategory)
       .then(response => {
-        // console.log('got in create test for product',response);
         expect(response.status).toEqual(201);
         expect(response.body.name).toEqual('fish');
       });
@@ -204,24 +202,22 @@ describe('Products API', () => {
     const testCategory = {
       name: 'flowers',
       description: 'There are some flower',
-      quantity: 20,
     };
 
     const updateCategory = {
       name: 'flowers',
-      description: 'There are some flower',
-      quantity: 30,
+      description: 'There are some flowers here',
     };
 
     return mockRequest.post('/api/v1/categories')
       .set('Authorization', 'Bearer ' + encodedToken)
       .send(testCategory)
       .then(result=>{
-        return (mockRequest.put(`/api/v1/categories/${result.body._id}`)).send(updateCategory);
+        return (mockRequest.put(`/api/v1/categories/${result.body._id}`)).send(updateCategory)
+          .set('Authorization', 'Bearer ' + encodedToken);
       })
 
       .then(response=>{
-        // console.log('this is in the putProduct test, response:', response);
         expect(response.status).toEqual(200);
         expect(response.body.name).toEqual(testCategory.name);
       });
@@ -231,22 +227,21 @@ describe('Products API', () => {
     const testCategory = {
       name: 'sushi',
       description: 'There are some sushi',
-      quantity: 13,
     };
     return mockRequest.post('/api/v1/categories')
       .set('Authorization', 'Bearer ' + encodedToken)
       .send(testCategory)
       .then(result=>{
-        return (mockRequest.delete(`/api/v1/categories/${result.body._id}`));
+        return (mockRequest.delete(`/api/v1/categories/${result.body._id}`))
+          .set('Authorization', 'Bearer ' + encodedToken);
       })
 
       .then(response=>{
-        // console.log('this is in the deleteCategory test, response:', response);
         expect(response.status).toEqual(200);
         expect(response.body.name).toEqual(testCategory.name);
       });
 
   });
 
-
 });
+

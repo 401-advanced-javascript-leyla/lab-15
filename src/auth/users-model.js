@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const usedToken = [];
+// const usedToken = [];
 
 
 
@@ -78,12 +78,12 @@ users.statics.authenticateBasic = function(auth) {
 users.statics.authenticateToken = function(token){
   const decryptedToken = jwt.verify(token, process.env.SECRET || 'secret');
 
-  if(!usedToken.includes(token)){
-    usedToken.push(token);
-  }else{
-    console.log('this token has been used once');
-    return Promise.reject('invalid token');
-  }
+  // if(!usedToken.includes(token)){
+  // usedToken.push(token);
+  // }else{
+  //   console.log('this token has been used once');
+  //   return Promise.reject('invalid token');
+  // }
   const query = {_id: decryptedToken.id};
   return this.findOne(query);
 };
@@ -107,16 +107,16 @@ users.methods.comparePassword = function(password) {
  */
 
 users.methods.generateToken = function() {
-  let options = {
-    expiresIn: '15m',
-  };
+  // let options = {
+  //   expiresIn: '15m',
+  // };
 
   let token = {
     id: this._id,
     role: this.role,
   };
 
-  return jwt.sign(token, process.env.SECRET, options);
+  return jwt.sign(token, process.env.SECRET);
 };
 
 module.exports = mongoose.model('users', users);
